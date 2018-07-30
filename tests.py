@@ -16,14 +16,12 @@ class PartyTests(unittest.TestCase):
     def test_homepage(self):
         """Can we reach the homepage?"""
 
-        client = party.app.test_client()
         result = self.client.get("/")
         self.assertIn(b"having a party", result.data)
 
     def test_no_rsvp_yet(self):
         """Do users who haven't RSVPed see the correct view?"""
 
-        client = party.app.test_client()
         result = self.client.get("/")
 
         self.assertIn(b"Please RSVP", result.data)
@@ -34,7 +32,6 @@ class PartyTests(unittest.TestCase):
     def test_rsvp(self):
         """Do RSVPed users see the correct view?"""
 
-        client = party.app.test_client()
 
         rsvp_info = {'name': "Jane", 'email': "jane@jane.com"}
 
@@ -50,7 +47,6 @@ class PartyTests(unittest.TestCase):
 
         # FIXME: write a test that mel can't invite himself
 
-        client = party.app.test_client()
         rsvp_info = {'name': "Mel", 'email': "jane@jane.com"}
         result = self.client.post("/rsvp", data=rsvp_info,
                                   follow_redirects=True)
